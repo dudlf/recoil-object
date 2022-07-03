@@ -50,16 +50,19 @@ function getEffectsNode(args, propKey, useRootAtom, _self) {
   }
   return ((_d = (_c = args.options) == null ? void 0 : _c[atomKey]) == null ? void 0 : _d.effects) || [];
 }
-function createRecoilObject(args, useRootAtom, parent, propKey) {
+function getSelfNode(args, parent, propKey) {
   var _a;
-  const _self = useRootAtom ? atom({
+  return atom({
     ...(_a = args.options) == null ? void 0 : _a._self,
     key: args.key,
     default: args.default,
     effects: getEffectsSelf(args, parent, propKey)
-  }) : void 0;
+  });
+}
+function createRecoilObject(args, useRootAtom, parent, propKey) {
+  const _self = useRootAtom ? getSelfNode(args, parent, propKey) : void 0;
   function mapper(e) {
-    var _a2, _b;
+    var _a, _b;
     const [propKey2, propVal] = e;
     const atomkey = `${args.key}.${String(propKey2)}`;
     if (isObject(propVal)) {
@@ -68,7 +71,7 @@ function createRecoilObject(args, useRootAtom, parent, propKey) {
         createRecoilObject({
           key: atomkey,
           default: propVal,
-          options: (_a2 = args.options) == null ? void 0 : _a2[propKey2]
+          options: (_a = args.options) == null ? void 0 : _a[propKey2]
         }, useRootAtom, _self, propKey2)
       ];
     }
