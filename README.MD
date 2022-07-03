@@ -1,12 +1,12 @@
 # Recoil-Object
 
-## Manage related atoms with object
+## Manage related atoms just like object
 
-Manage related atoms with object
+Manage related atoms just like object
 
 ## Features
 
-- Manage related atoms as object
+- Manage related atoms just like object
 
 ## Example
 
