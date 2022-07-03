@@ -3,7 +3,7 @@ import { setRecoil } from 'recoil-nexus'
 
 import { isObject } from '../utils/is-object'
 
-function getEffectsSelf(args, parent) {
+function getEffectsSelf(args, parent, propKey) {
   if (parent) {
     return [
       ...(args.options?.['_self']?.effects || []),
@@ -11,7 +11,7 @@ function getEffectsSelf(args, parent) {
         onSet((newValue) => {
           setRecoil(parent, (currVal) => ({
             ...currVal,
-            [args.key]: newValue,
+            [propKey]: newValue,
           }))
         })
       },
@@ -20,7 +20,7 @@ function getEffectsSelf(args, parent) {
   return args.options?.['_self']?.effects || []
 }
 
-function getEffectsNode(args, propKey, useRootAtom) {
+function getEffectsNode(args, propKey, useRootAtom, _self) {
   if (useRootAtom) {
     return [
       ...(args.options?.[propKey]?.effects || []),
@@ -35,16 +35,16 @@ function getEffectsNode(args, propKey, useRootAtom) {
       }),
     ]
   }
-  return args.options?.[propKey]?.effects || []
+  return args.options?.[atomKey]?.effects || []
 }
 
-function createRecoilObject(args, useRootAtom, parent) {
+function createRecoilObject(args, useRootAtom, parent, propKey) {
   const _self = useRootAtom
     ? atom({
       ...args.options?._self,
       key: args.key,
       default: args.default,
-      effects: getEffectsSelf(args, parent),
+      effects: getEffectsSelf(args, parent, propKey),
     })
     : undefined
 
@@ -63,7 +63,8 @@ function createRecoilObject(args, useRootAtom, parent) {
             options: args.options?.[propKey],
           },
           useRootAtom,
-          _self
+          _self,
+          propKey
         ),
       ]
     }
@@ -74,7 +75,7 @@ function createRecoilObject(args, useRootAtom, parent) {
         ...args.options?.[propKey],
         key: atomkey,
         default: propVal,
-        effects: getEffectsNode(args, propKey, useRootAtom),
+        effects: getEffectsNode(args, propKey, useRootAtom, _self),
       }),
     ]
   }
@@ -91,11 +92,11 @@ function createRecoilObject(args, useRootAtom, parent) {
     .reduce(reducer, useRootAtom ? { _self } : {})
 }
 
-function recoilObject(args) {
+export function recoilObject(args) {
   return createRecoilObject(args, false)
 }
 
-function recoilObjectWithRoot(args) {
+export function recoilObjectWithRoot(args) {
   return createRecoilObject(args, true)
 }
 
