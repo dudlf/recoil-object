@@ -7,9 +7,9 @@ type RecoilObject<O extends object> = Readonly<{
 }>
 
 type RecoilObjectWithRoot<O extends object> = {
-  _self: RecoilObjectWithRoot<O>
+  _self: RecoilState<O>
 } & {
-  [P in keyof O]: O[P] extends object ? RecoilObject<O[P]> : RecoilState<O[P]>
+  [P in keyof O]: O[P] extends object ? RecoilObjectWithRoot<O[P]> : RecoilState<O[P]>
 }
 
 type RecoilObjectDefault<O extends object> = {
