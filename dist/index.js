@@ -1,0 +1,2 @@
+"use strict";var n=Object.defineProperty;var r=Object.getOwnPropertyDescriptor;var c=Object.getOwnPropertyNames;var u=Object.prototype.hasOwnProperty;var p=(t,e,i,o)=>{if(e&&typeof e=="object"||typeof e=="function")for(let f of c(e))!u.call(t,f)&&f!==i&&n(t,f,{get:()=>e[f],enumerable:!(o=r(e,f))||o.enumerable});return t};var l=t=>p(n({},"__esModule",{value:!0}),t);var y={};module.exports=l(y);var d=require("recoil"),m=require("recoil-nexus");var s=require("recoil");
+//# sourceMappingURL=index.js.map
