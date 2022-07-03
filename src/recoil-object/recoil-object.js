@@ -38,15 +38,17 @@ function getEffectsNode(args, propKey, useRootAtom, _self) {
   return args.options?.[atomKey]?.effects || []
 }
 
+function getSelfNode(args, parent, propKey) {
+  return atom({
+    ...args.options?._self,
+    key: args.key,
+    default: args.default,
+    effects: getEffectsSelf(args, parent, propKey),
+  })
+}
+
 function createRecoilObject(args, useRootAtom, parent, propKey) {
-  const _self = useRootAtom
-    ? atom({
-      ...args.options?._self,
-      key: args.key,
-      default: args.default,
-      effects: getEffectsSelf(args, parent, propKey),
-    })
-    : undefined
+  const _self = useRootAtom ? getSelfNode(args, parent, propKey) : undefined
 
   function mapper(e) {
     const [propKey, propVal] = e
