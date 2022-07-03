@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { infoAtom } from './recoil/info'
+import { infoAtom } from '../recoil/info'
 
 function App() {
   function Info() {

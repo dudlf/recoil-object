@@ -1,11 +1,11 @@
-import { recoilObject, RecoilObjectDefault, recoilObjectWithRoot } from 'recoil-object'
+import { RecoilObjectDefault, recoilObjectWithRoot } from 'recoil-object'
 
 type Info = {
   id: string
   profile: {
     name: string
     age: number,
-  }
+  },
 }
 
 const infoDefault: RecoilObjectDefault<Info> = {
