@@ -12,7 +12,7 @@ function isPromise(obj) {
 
 // src/utils/is-object.ts
 function isObject(obj) {
-  return typeof obj === "object" && !isPromise(obj) && !RecoilLoadable.isLoadable(obj);
+  return obj !== null && typeof obj === "object" && !isPromise(obj) && !RecoilLoadable.isLoadable(obj);
 }
 
 // src/recoil-object/recoil-object.js
